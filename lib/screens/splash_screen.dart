@@ -1,6 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import '../services/navigation_services.dart';
+import 'package:get_it/get_it.dart';
+import '../services/media_services.dart';
+import '../services/cloud_storage_service.dart';
+import '../services/database.dart';
+
 
 
 class Splash extends StatefulWidget {
@@ -8,25 +14,27 @@ class Splash extends StatefulWidget {
 
 
   const Splash(
-      {required Key key, required this.onInitializationComplete,}) : super(key: key);
+      {required Key key, required this.onInitializationComplete,})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _SplashState();
+    return SplashState();
   }
 
 }
 
-class _SplashState extends State<Splash>{
+class SplashState extends State<Splash>{
   @override
   void initState() {
     super.initState();
-    _setup().then((_) => widget.onInitializationComplete(),
-    );
+    Future.delayed(const Duration(seconds: 2)).then((_){
+      setup().then((_) => widget.onInitializationComplete(),
+      );
+    });
   }
 
-
-@override
+  @override
   Widget build(BuildContext context) {
   return MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -50,19 +58,19 @@ class _SplashState extends State<Splash>{
   );
 }
 
-Future<void> _setup() async {
+Future<void> setup() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  _registerServices();
+  registerServices();
 }
 
-void _registerServices(){
-
-
+void registerServices(){
+    GetIt.instance.registerSingleton<NavigationService>(NavigationService());
+    GetIt.instance.registerSingleton<MediaService>(MediaService());
+    GetIt.instance.registerSingleton<CloudStorageService>(CloudStorageService());
+    GetIt.instance.registerSingleton<DatabaseService>(DatabaseService());
 }
-
-
-    }
+}
 
 
 
