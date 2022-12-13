@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
@@ -27,17 +28,14 @@ class _SplashState extends State<Splash>{
   Widget build(BuildContext context){
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-
-        title: 'WhatsUp?',
       theme: ThemeData(
-        backgroundColor: const Color.fromRGBO(36, 35, 49, 1.0),
-        scaffoldBackgroundColor: const Color.fromRGBO(36, 35, 49, 1.0),
+        scaffoldBackgroundColor: CupertinoColors.darkBackgroundGray,
       ),
       home: Scaffold(
         body: Center(
             child:Container(
-                height:200,
-                width:200,
+                height:300,
+                width:300,
                 decoration:const BoxDecoration(
                   image:DecorationImage(
                       fit: BoxFit.contain,
