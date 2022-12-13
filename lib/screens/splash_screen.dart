@@ -49,7 +49,7 @@ class SplashState extends State<Splash>{
           decoration: const BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.contain,
-              image: AssetImage('lib/assets/chatpic.png'),
+              image: AssetImage('lib/assets/chat_pic.png'),
             ),
           ),
         ),

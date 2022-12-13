@@ -18,10 +18,8 @@ import './services/navigation_services.dart';
 
 void main() {
   runApp(Splash(key:UniqueKey(), onInitializationComplete: (){
-    runApp(const TheApp(),);
-  }
-  )
-  );
+    runApp(const TheApp());
+  }));
 }
 
 class TheApp extends StatelessWidget {
