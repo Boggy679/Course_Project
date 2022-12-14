@@ -13,7 +13,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import './screens/splash_screen.dart';
 import './services/navigation_services.dart';
-
+import './screens/login.dart';
 
 
 void main() {
@@ -33,7 +33,11 @@ class TheApp extends StatelessWidget {
         scaffoldBackgroundColor: CupertinoColors.darkBackgroundGray,
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: Colors.green),
       ),
-     // navigatorKey: NavigationService.navigatorKey,
+      navigatorKey: NavigationService.navigatorKey,
+      initialRoute: '/login',
+      routes: {
+        '/login': (BuildContext context) => const LoginScreen(),
+      },
     );
   }
 }
