@@ -65,8 +65,8 @@ class LoginScreenState extends State<LoginScreen>{
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              LoginFields(onSaved: (value){}, regEx: r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+" , hintText: "Email" , obscureText: false),
-              //LoginFields(onSaved:, regEx: , hintText: "Password", obscureText: true ),
+              EmailEntry(onSaved: (value){}, regEx: r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+" , hintText: "Email" , obscureText: false),
+              PasswordEntry(onSaved: (value){}, regEx: r".{8,}", hintText: "Password", obscureText: true),
             ],
           ),
         )
@@ -74,13 +74,13 @@ class LoginScreenState extends State<LoginScreen>{
   }
 }
 
-class LoginFields extends StatelessWidget {
+class EmailEntry extends StatelessWidget {
   final Function(String) onSaved;
   final String regEx;
   final String hintText;
   final bool obscureText;
 
-  const LoginFields({
+  const EmailEntry({
     super.key,
     required this.onSaved,
     required this.regEx,
@@ -107,9 +107,46 @@ class LoginFields extends StatelessWidget {
         hintText: hintText,
         hintStyle: const TextStyle(color:Colors.white),
 
-
-
       )
+    );
+  }}
+
+
+class PasswordEntry extends StatelessWidget {
+  final Function(String) onSaved;
+  final String regEx;
+  final String hintText;
+  final bool obscureText;
+
+  const PasswordEntry({
+    super.key,
+    required this.onSaved,
+    required this.regEx,
+    required this.hintText,
+    required this.obscureText,
+
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+        onSaved: (value) => onSaved(value!),
+        cursorColor: Colors.white,
+        style: const TextStyle(color: Colors.white),
+        obscureText: obscureText,
+        validator: (value){
+          return RegExp(regEx).hasMatch(value!)?null:'Enter again';
+        },
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          hintText: hintText,
+          hintStyle: const TextStyle(color:Colors.white),
+
+
+
+        )
     );
   }}
 
