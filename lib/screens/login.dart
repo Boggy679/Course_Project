@@ -65,7 +65,7 @@ class LoginScreenState extends State<LoginScreen>{
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              EmailEntry(onSaved: (value){}, regEx: r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+" , hintText: "Email" , obscureText: false),
+              EmailEntry(onSaved: (value){}, regEx: r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+" , hintText: "Email"),
               PasswordEntry(onSaved: (value){}, regEx: r".{8,}", hintText: "Password", obscureText: true),
             ],
           ),
@@ -78,14 +78,12 @@ class EmailEntry extends StatelessWidget {
   final Function(String) onSaved;
   final String regEx;
   final String hintText;
-  final bool obscureText;
 
   const EmailEntry({
     super.key,
     required this.onSaved,
     required this.regEx,
     required this.hintText,
-    required this.obscureText,
 
   });
 
@@ -96,7 +94,6 @@ class EmailEntry extends StatelessWidget {
       onSaved: (value) => onSaved(value!),
       cursorColor: Colors.white,
       style: const TextStyle(color: Colors.white),
-      obscureText: obscureText,
       validator: (value){
         return RegExp(regEx).hasMatch(value!)?null:'Enter again';
       },
@@ -143,9 +140,6 @@ class PasswordEntry extends StatelessWidget {
           ),
           hintText: hintText,
           hintStyle: const TextStyle(color:Colors.white),
-
-
-
         )
     );
   }}
