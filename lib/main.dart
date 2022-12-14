@@ -30,8 +30,7 @@ class TheApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: CupertinoColors.darkBackgroundGray,
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: Colors.green),
+        scaffoldBackgroundColor: CupertinoColors.activeGreen,
       ),
       navigatorKey: NavigationService.navigatorKey,
       initialRoute: '/login',
