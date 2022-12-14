@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-
 class LoginScreen extends StatefulWidget{
   const LoginScreen({super.key});
-
 
   @override
   State<StatefulWidget> createState() {
@@ -11,7 +9,6 @@ class LoginScreen extends StatefulWidget{
   }
 
 }
-
 
 class LoginScreenState extends State<LoginScreen>{
   late double devHeight;
@@ -41,6 +38,8 @@ class LoginScreenState extends State<LoginScreen>{
           children: [
             title(),
             loginForm(),
+            const SizedBox(height: 80),
+            LoginButton(onPressed: (){}, height: 50, width: 300),
           ],
         ),
       ),
@@ -57,7 +56,7 @@ class LoginScreenState extends State<LoginScreen>{
   }
   Widget loginForm(){
     return SizedBox(
-        height: devHeight * 0.18,
+        height: devHeight * 0.16,
         child: Form(
           key: loginKey,
           child: Column(
@@ -74,6 +73,7 @@ class LoginScreenState extends State<LoginScreen>{
   }
 }
 
+// creating the email entry characteristics
 class EmailEntry extends StatelessWidget {
   final Function(String) onSaved;
   final String regEx;
@@ -92,7 +92,7 @@ class EmailEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       onSaved: (value) => onSaved(value!),
-      cursorColor: Colors.white,
+      cursorColor: Colors.black,
       style: const TextStyle(color: Colors.white),
       validator: (value){
         return RegExp(regEx).hasMatch(value!)?null:'Enter again';
@@ -108,7 +108,7 @@ class EmailEntry extends StatelessWidget {
     );
   }}
 
-
+// creating the password entry characteristics
 class PasswordEntry extends StatelessWidget {
   final Function(String) onSaved;
   final String regEx;
@@ -121,7 +121,6 @@ class PasswordEntry extends StatelessWidget {
     required this.regEx,
     required this.hintText,
     required this.obscureText,
-
   });
 
   @override
@@ -145,5 +144,34 @@ class PasswordEntry extends StatelessWidget {
   }}
 
 
+//creating the LoginButton characteristics
+class LoginButton extends StatelessWidget{
+  final double height;
+  final double width;
+  final Function onPressed;
+
+  const LoginButton({
+    super.key,
+    required this.onPressed,
+    required this.height,
+    required this.width,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height:height,
+      width: width,
+      child: ElevatedButton(
+        onPressed: (){},
+        child: const Text("Login",
+            style: TextStyle(fontSize: 25,
+              color: Colors.white,
+              height:1.5,)
+        )
+      )
+    );
+  }
+}
 
 
