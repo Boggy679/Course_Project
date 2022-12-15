@@ -14,7 +14,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import './screens/splash_screen.dart';
 import './services/navigation_services.dart';
 import './screens/login.dart';
-
+import './providers/authentication.dart';
 
 void main() {
   runApp(Splash(key:UniqueKey(), onInitializationComplete: (){
@@ -27,7 +27,14 @@ class TheApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<Authentication>(
+          create:(BuildContext context){
+          return Authentication();
+        },)],
+
+      child: MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: CupertinoColors.activeGreen,
@@ -37,7 +44,7 @@ class TheApp extends StatelessWidget {
       routes: {
         '/login': (BuildContext context) => const LoginScreen(),
       },
-    );
+    ));
   }
 }
 
