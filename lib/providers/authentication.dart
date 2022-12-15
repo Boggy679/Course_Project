@@ -16,20 +16,34 @@ class Authentication extends ChangeNotifier{
     auth = FirebaseAuth.instance;
     navigationService = GetIt.instance.get<NavigationService>();
     databaseService = GetIt.instance.get<DatabaseService>();
+    auth.authStateChanges().listen((user){
+      if(user  != null){
+        databaseService.getUser(user.uid);
+          if (kDebugMode) {
+            print("Logged in");
+          }
+
+      }
+      else{
+          if (kDebugMode) {
+            print("Try again!");
+          }
+        }
+    });
   }
 
   Future<void>loginMethod(String email,String password) async{
 
     try{
       await auth.signInWithEmailAndPassword(email: email, password: password);
-     // if (kDebugMode) {
-       // print(auth.currentUser);
-     // }
+      if (kDebugMode) {
+        print(auth.currentUser);
+      }
     }
     on FirebaseAuthException{
-      //if (kDebugMode) {
-        //print("Error");
-      //}
+      if (kDebugMode) {
+        print("Error");
+      }
     }
     catch (e){
       if (kDebugMode) {

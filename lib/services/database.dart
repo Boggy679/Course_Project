@@ -10,6 +10,9 @@ class DatabaseService{
   final FirebaseFirestore db = FirebaseFirestore.instance;
   DatabaseService(){}
 
+  Future<DocumentSnapshot> getUser(String uid){
+    return db.collection(userCollection).doc(uid).get();
+  }
 }
 
 
