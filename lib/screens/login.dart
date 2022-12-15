@@ -1,4 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:messenger/providers/authentication.dart';
+import 'package:messenger/services/navigation_services.dart';
+import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 
 class LoginScreen extends StatefulWidget{
   const LoginScreen({super.key});
@@ -14,12 +20,18 @@ class LoginScreenState extends State<LoginScreen>{
   late double devHeight;
   late double devWidth;
   final loginKey = GlobalKey<FormState>();
+  String? email;
+  String? password;
+  late Authentication auth;
+  late NavigationService navigation;
 
 
   @override
   Widget build(BuildContext context) {
     devHeight = MediaQuery.of(context).size.height;
     devWidth = MediaQuery.of(context).size.width;
+    navigation = GetIt.instance.get<NavigationService>();
+    auth = Provider.of<Authentication>(context);
 
     return loginUI();
   }
@@ -41,9 +53,18 @@ class LoginScreenState extends State<LoginScreen>{
             SizedBox(height: devHeight * 0.2),
             const CreateAccount(name: "Create Account"),
             SizedBox(height: devHeight * 0.01),
-            LoginButton(onPressed: (){}, height: 50, width: 300),
+            LoginButton(onPressed: (){
+              if (loginKey.currentState!.validate()){
+                if (kDebugMode) {
+                  print("Email: $email, Password: $password");
 
-
+                }loginKey.currentState!.save();
+                if (kDebugMode) {
+                  print("Email: $email, Password: $password");
+                }
+                auth.loginMethod(email!, password!);
+              }
+            }, height: 50, width: 300),
           ],
         ),
       ),
@@ -69,8 +90,16 @@ class LoginScreenState extends State<LoginScreen>{
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              EmailEntry(onSaved: (value){}, regEx: r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+" , hintText: "Email"),
-              PasswordEntry(onSaved: (value){}, regEx: r".{8,}", hintText: "Password", obscureText: true),
+              EmailEntry(onSaved: (value){
+                setState(() {
+                  email = value;
+                });
+              }, regEx: r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+" , hintText: "Email"),
+              PasswordEntry(onSaved: (value){
+                setState(() {
+                  password = value;
+                });
+              }, regEx: r".{8,}", hintText: "Password", obscureText: true),
             ],
           ),
         )
@@ -149,6 +178,32 @@ class PasswordEntry extends StatelessWidget {
   }}
 
 
+
+// creating a create account button
+class CreateAccount extends StatelessWidget{
+  final String name;
+
+  const CreateAccount({
+    super.key,
+    required this.name
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: (){},
+        child: TextButton(
+            style: TextButton.styleFrom(textStyle: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+              primary: Colors.white,
+            ),
+            onPressed: () {},
+            child: Text(name)));
+  }}
+
+
 //creating the LoginButton characteristics
 class LoginButton extends StatelessWidget{
   final double height;
@@ -168,7 +223,7 @@ class LoginButton extends StatelessWidget{
       height:height,
       width: width,
       child: ElevatedButton(
-        onPressed: (){},
+        onPressed: () => onPressed(),
         child: const Text("Login",
             style: TextStyle(fontSize: 25,
               color: Colors.white,
@@ -178,28 +233,4 @@ class LoginButton extends StatelessWidget{
     );
   }
 }
-
-// creating a create account button
-class CreateAccount extends StatelessWidget{
-  final String name;
-
-  const CreateAccount({
-    super.key,
-    required this.name
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){},
-        child: TextButton(
-            style: TextButton.styleFrom(textStyle: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-              primary: Colors.white,
-            ),
-            onPressed: () {},
-            child: Text(name)));
-  }}
 
