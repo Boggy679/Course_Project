@@ -38,13 +38,18 @@ class LoginScreenState extends State<LoginScreen>{
           children: [
             title(),
             loginForm(),
-            const SizedBox(height: 80),
+            SizedBox(height: devHeight * 0.2),
+            const CreateAccount(name: "Create Account"),
+            SizedBox(height: devHeight * 0.01),
             LoginButton(onPressed: (){}, height: 50, width: 300),
+
+
           ],
         ),
       ),
     );
   }
+
   Widget title(){
     return SizedBox(height: devHeight * 0.1,
         child: const Text('WhatsUp?',
@@ -127,7 +132,7 @@ class PasswordEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
         onSaved: (value) => onSaved(value!),
-        cursorColor: Colors.white,
+        cursorColor: Colors.black,
         style: const TextStyle(color: Colors.white),
         obscureText: obscureText,
         validator: (value){
@@ -174,4 +179,27 @@ class LoginButton extends StatelessWidget{
   }
 }
 
+// creating a create account button
+class CreateAccount extends StatelessWidget{
+  final String name;
+
+  const CreateAccount({
+    super.key,
+    required this.name
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: (){},
+        child: TextButton(
+            style: TextButton.styleFrom(textStyle: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+              primary: Colors.white,
+            ),
+            onPressed: () {},
+            child: Text(name)));
+  }}
 
